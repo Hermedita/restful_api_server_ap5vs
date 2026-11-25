@@ -2,6 +2,8 @@ package utb.fai.RESTAPIServer;
 
 import java.util.regex.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,6 +33,7 @@ public class MyUser {
     private static final Pattern VALID_EMAIL = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*\\.[A-Za-z]{2,}$");
     private static final Pattern VALID_PHONE = Pattern.compile("^\\+420\\d{9}$");
 
+    @JsonIgnore
     public boolean isUserDataValid() {
         if (name == null || name.isBlank()) return false;
         if (email == null || email.isBlank() || !VALID_EMAIL.matcher(email).matches()) return false;
