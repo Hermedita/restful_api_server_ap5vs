@@ -1,7 +1,19 @@
 package utb.fai.RESTAPIServer;
 
+import java.util.regex.Pattern;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity 
+@Table (name = "users")
 // Database entity representing a user in the system
 public class MyUser {
+    @Id 
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
 
     private Long id;
     private String name;
@@ -16,12 +28,28 @@ public class MyUser {
         this.phoneNumber = phoneNumber;
     }
 
+    private static final Pattern VALID_EMAIL = Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*\\.[A-Za-z]{2,}$");
+    private static final Pattern VALID_PHONE = Pattern.compile("^\\+420\\d{9}$");
+
     public boolean isUserDataValid() {
-        // Add your validation logic here (e.g., email and phone number format
-        // validation)
+        if (name == null || name.isBlank()) return false;
+        if (email == null || email.isBlank() || !VALID_EMAIL.matcher(email).matches()) return false;
+        if (phoneNumber == null || phoneNumber.isBlank() || !VALID_PHONE.matcher(phoneNumber).matches()) return false;
+        // Add your validation logic here (e.g., email and phone number format validation)
         return true;
     }
 
-    // TODO: Getters and setters
+    // Getters and setters
+    public Long getid(){return id;}
+    public void setid(Long id){this.id = id;}
+
+    public String getname(){return name;}
+    public void setname(String name){this.name = name;}
+
+    public String getemail(){return email;}
+    public void setemail(String email){this.email = email;}
+
+    public String getphoneNumber(){return phoneNumber;}
+    public void setphoneNumber(String phoneNumber){this.phoneNumber = phoneNumber;}
     
 }
